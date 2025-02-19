@@ -60,6 +60,11 @@ public class AuthentikSynchronization : TimerService
 
             await foreach (var authUser in authentikUsers)
             {
+                if (authUser.Username.StartsWith("ak-outpost"))
+                {
+                    _logger.LogWarning("Usernames starting with \"ak-outpost\" not allowed. Skipping this one: {Username}", authUser.Username);
+                    continue;
+                }
                 if (!processedUsernames.Add(authUser.Username.ToLowerInvariant()))
                 {
                     _logger.LogWarning("Found username duplicate, differing only in casing. Skipping this one: {Username}", authUser.Username);
