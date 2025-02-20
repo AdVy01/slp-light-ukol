@@ -12,6 +12,7 @@ public class AuthentikSynchronization : TimerService
 
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<AuthentikSynchronization> _logger;
+    private const String improperUsernamePrefix = "ak-outpost";
 
     public AuthentikSynchronization(IServiceProvider serviceProvider,
         ILogger<AuthentikSynchronization> logger)
@@ -60,9 +61,9 @@ public class AuthentikSynchronization : TimerService
 
             await foreach (var authUser in authentikUsers)
             {
-                if (authUser.Username.StartsWith("ak-outpost"))
+                if (authUser.Username.StartsWith(improperUsernamePrefix))
                 {
-                    _logger.LogWarning("Usernames starting with \"ak-outpost\" not allowed. Skipping this one: {Username}", authUser.Username);
+                    _logger.LogWarning("Usernames starting with "+ improperUsernamePrefix + " not allowed. Skipping this one: {Username}", authUser.Username);
                     continue;
                 }
                 if (!processedUsernames.Add(authUser.Username.ToLowerInvariant()))
