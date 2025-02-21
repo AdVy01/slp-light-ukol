@@ -18,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<AuthentikSynchronization>();
 builder.Services.AddSingleton<AuthentikSynchronization>();
+builder.Services.AddHostedService<DbUserCleaner>();
 
 AddAuthentik(builder.Services, builder.Configuration.GetSection("Authentik"));
 

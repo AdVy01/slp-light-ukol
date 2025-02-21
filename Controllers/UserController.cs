@@ -11,8 +11,6 @@ namespace slp.light.Controllers
     {
         private readonly ILogger<UserController> _logger;
 
-        private const String improperUsernamePrefix = "ak-outpost";
-
         public UserController(ILogger<UserController> logger)
         {
             _logger = logger;
@@ -23,7 +21,7 @@ namespace slp.light.Controllers
         {
             var mapper = MapperConfig.InitializeAutomapper();
 
-            var users = dbContext.Users.Where(user => !user.Username.StartsWith(improperUsernamePrefix));
+            var users = dbContext.Users;
 
             return await mapper
                 .ProjectTo<UserOutDto>(users, parameters: null)
